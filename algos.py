@@ -315,5 +315,78 @@ def print_nodes(sll):
 
 #more efficient result here
 
+#Remove this node creator for a significant jump in faster than percentage (already in their program, I must define it to work in mine)
+#better speed same mem usage
+class ListNode(object): 
+    def __init__(self, val=0,next=None):
+        self.val=val
+        self.next=next
+
+def addTwoNumbers(l1, l2):
+    l1_results = read_node(l1)
+    l1_number = convert_list(l1_results)
+    l2_results = read_node(l2)
+    l2_number = convert_list(l2_results)
+    l3 = l1_number + l2_number
+    return convert_number_to_node(str(l3))
+
+def read_node(node):
+    results = []
+    results.append(node.val)
+    while node.next != None:
+        node = node.next
+        results.append(node.val)
+    return results
+
+def convert_list(array):
+    x = len(array)-1
+    number = ""
+    while x >= 0:
+        number += str(array[x])
+        x -=1
+    return int(number)
+
+def convert_number_to_node(number):
+    for x in range(0,len(number)):
+        if x == 0:
+            node = ListNode(number[x])
+        else:
+            node = ListNode(number[x],node)
+    return node
+
+#better mem, worse speed than prev but fater than original
+def addTwoNumbers(l1, l2):
+    results = []
+    results.append(l1.val)
+    while l1.next != None:
+        l1 = l1.next
+        results.append(l1.val)
+    
+    x = len(results)-1
+    number1 = ""
+    while x >= 0:
+        number1 += str(results[x])
+        x -=1
+
+    results = []
+    results.append(l2.val)
+    while l2.next != None:
+        l2 = l2.next
+        results.append(l2.val)
+
+    x = len(results)-1
+    number2 = ""
+    while x >= 0:
+        number2 += str(results[x])
+        x -=1
+    
+    l3 = int(number1) + int(number2)
+    l3 = str(l3)
+    for x in range(0,len(l3),1):
+        if x == 0:
+            node = ListNode(l3[x])
+        else:
+            node = ListNode(l3[x],node)
+    return node
 
 #next one here
