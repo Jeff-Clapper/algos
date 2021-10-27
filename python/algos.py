@@ -110,12 +110,12 @@ def array_diff(a, b):
             output.append(a[ind])
     return output
 
-    #had an idea for a different method. I like this because it doesn't create another variable to take up memory and it is one less line of code
-    def array_diff(a, b):
-        for ind in range(len(a)-1,-1,-1):
-            if a[ind] in b:
-                del a[ind]
-        return a
+#had an idea for a different method. I like this because it doesn't create another variable to take up memory and it is one less line of code
+def array_diff(a, b):
+    for ind in range(len(a)-1,-1,-1):
+        if a[ind] in b:
+            del a[ind]
+    return a
 
 #Given an integer array nums, return all the triplets [nums[i], nums[j], nums[k]] such that i != j, i != k, and j != k, and nums[i] + nums[j] + nums[k] == 0. Notice that the solution set must not contain duplicate triplets.
 #ex: Input: nums = [-1,0,1,2,-1,-4], Output: [[-1,-1,2],[-1,0,1]]
@@ -389,4 +389,29 @@ def addTwoNumbers(l1, l2):
             node = ListNode(l3[x],node)
     return node
 
-#next one here
+# Given a string s, find the length of the longest substring without repeating characters
+def lengthOfLongestSubstring(inp: str) -> int:
+    longestLength = 0
+    if len(inp) < 1:
+        return longestLength
+    for index in range(len(inp)):
+        if len(range(index,len(inp))) < longestLength:
+            break
+        longestLengthFromPoint = assessString(inp,index)
+        if longestLengthFromPoint > longestLength:
+            longestLength = longestLengthFromPoint
+    return longestLength
+        
+
+def assessString(inp,index):
+    run = ""
+    val = inp[index]
+    
+    while val not in run:
+        run += inp[index]
+        index+=1
+        if index == len(inp):
+            break
+        
+        val = inp[index]
+    return len(run)
