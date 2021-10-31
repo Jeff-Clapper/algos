@@ -88,3 +88,28 @@ function visibleBuildings(arr) {
     arr.length = buildings;
     return arr;
 }
+
+//Credit Card Validation: Recreate Luhn Formula (formula steps were provided)
+function isCreditCardValid(digitArr){
+    var total = digitArr[digitArr.length-1]
+    digitArr.length -= 1
+    
+    for(var ind = digitArr.length-1;ind >= 0; ind-=2) {
+        digitArr[ind]*=2
+    }
+    
+    for(var ind = 0; ind < digitArr.length; ind++){
+        if(digitArr[ind] > 9) {
+            digitArr[ind] -= 9
+        }
+        total += digitArr[ind]
+    }
+    if(total % 10 == 0){
+        return true
+    }
+    else {
+        return false
+    }
+}
+
+//next algo

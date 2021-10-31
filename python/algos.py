@@ -415,3 +415,90 @@ def assessString(inp,index):
         
         val = inp[index]
     return len(run)
+
+#Given two sorted arrays nums1 and nums2 of size m and n respectively, return the median of the two sorted arrays. The overall run time complexity should be O(log (m+n))
+def findMedianSortedArrays(nums1, nums2) -> float:
+    #Gets the Index of the median value
+    median_index = (len(nums1)+len(nums2)-1)/2
+    if median_index%1 == 0:
+        results = get_median(nums1,nums2,int(median_index)) 
+        return float(results[-1])
+    else:
+        median_index += .5 
+        results = get_median(nums1,nums2,int(median_index)) 
+        result = (results[-1]+results[-2])/2
+        return float(result)
+
+    
+def get_median(nums1, nums2, index):
+    #creates an array from beginning to 
+    values = []
+    count1 = 0
+    count2 = 0
+    for ind in range(index+1):
+        if count1 == len(nums1):
+            values.append(nums2[count2])
+            count2 += 1
+        elif count2 == len(nums2):
+            values.append(nums1[count1])
+            count1 += 1
+        elif nums1[count1] <= nums2[count2]:
+            values.append(nums1[count1])
+            count1 +=1
+        else:
+            values.append(nums2[count2])
+            count2 += 1
+    print(values)
+    return values
+
+
+# Given a string s, consider all duplicated substrings: (contiguous) substrings of s that occur 2 or more times. The occurrences may overlap. Return any duplicated substring that has the longest possible length. If s does not have a duplicated substring, the answer is "".
+#LEETCODE num-1044
+# Too Slow
+def longestDupSubstring(s):
+    combinations = []
+    longest_dup = ""
+
+    for ind in range(len(s)):
+        test = ""
+        for combos in range(ind,len(s)):
+            test = test + (s[combos])
+            if test in combinations:
+                if len(test) > len(longest_dup):
+                    longest_dup = test
+            else:
+                combinations.append(test)
+    return longest_dup
+
+
+# also too slow
+def longestDupSubstring(s):
+    longest = ""
+    for ind in range(len(s)):
+        results = isInString(s,ind,ind+1)
+        if len(results) > len(longest):
+            longest = results
+    return longest
+
+
+def isInString(s,index,index_range,char=""):
+    char = char
+    while index_range <= len(s):
+        if (s[index:index_range] in s[index+1:len(s)]):
+            char = isInString(s,index,index_range+1,s[index:index_range])
+        return char
+
+#Someone elses answer:
+#Very similar to mine, except uses while instead of recursion and very vew variables/functions
+class Solution:
+    def longestDupSubstring(self, s: str) -> str:
+        ans = ''
+        j   = 1
+        for i in range(len(s)):
+            longest = s[i:i+j]
+            temp    = s[i+1:]
+            while longest in temp:
+                ans = longest
+                j += 1
+                longest = s[i:i+j]
+        return ans
