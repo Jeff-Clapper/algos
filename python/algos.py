@@ -502,3 +502,29 @@ class Solution:
                 j += 1
                 longest = s[i:i+j]
         return ans
+
+# 404. Sum of Left Leaves: Given the root of a binary tree, return the sum of all left leaves.
+    #Faster than 98.39%, memory usage less than 48.54%
+def sumOfLeftLeaves(root):
+    total = 0
+    if root.left:
+        total += go_left(root.left)
+    if root.right:
+        total += go_right(root.right)
+    return total
+
+def go_left(node,total=0):
+    if not node.left and not node.right:
+        total += node.val
+    if node.left:
+        total += go_left(node.left)
+    if node.right:
+        total += go_right(node.right)
+    return total
+
+def go_right(node,total=0):
+    if node.left:
+        total += go_left(node.left)
+    if node.right:
+        total += go_right(node.right)
+    return total
