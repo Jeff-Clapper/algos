@@ -528,3 +528,14 @@ def go_right(node,total=0):
     if node.right:
         total += go_right(node.right)
     return total
+
+# 260. Single Number III: Given an integer array nums, in which exactly two elements appear only once and all the other elements appear exactly twice. Find the two elements that appear only once. You can return the answer in any order. You must write an algorithm that runs in linear runtime complexity and uses only constant extra space.
+def singleNumber(arr):
+    results = []
+    while len(results) < 2:
+        val = arr.pop(0)
+        if val in arr:
+            arr.append(val)
+        else:
+            results.append(val)
+    return results
