@@ -539,3 +539,31 @@ def singleNumber(arr):
         else:
             results.append(val)
     return results
+
+#43. Multiply Strings: Given two non-negative integers num1 and num2 represented as strings, return the product of num1 and num2, also represented as a string. Note: You must not use any built-in BigInteger library or convert the inputs to integer directly.
+def multiply(num1: str, num2: str) -> str:
+    num1 = convert_string(num1)*convert_string(num2)
+    return f'{num1}'
+
+def convert_string(num: str) -> int:
+    nums = {"0":0,"1":1,"2":2,"3":3,"4":4,"5":5,"6":6,"7":7,"8":8,"9":9}
+    count, val = len(num)-1, 0
+    
+    for digit in num:
+        val += nums[digit] * (10**count)
+        count -= 1
+    
+    return val
+
+#AFTER READING DISCUSSIONS FOR 43, I am have misunderstood what "directly convert string" meant, so here is a second go at it (less fast but better memory usage)
+def multiply(num1: str, num2: str) -> str:
+    val = 0
+    count2 = len(num2)-1
+    for digit in num2:
+        count1 = len(num1)-1
+        digit = int(digit)*(10**count2)
+        for number in num1:
+            val += (int(number)*(10**count1))*digit
+            count1 -= 1
+        count2-=1
+    return f'{val}'
