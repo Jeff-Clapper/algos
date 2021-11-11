@@ -178,3 +178,62 @@ function removeShorterStrings(phrase,length) {
     }
     return phrase.join(" ")
 }
+
+//given string, returns that string with characters reversed.
+function reverseString(statement) {
+    var results = ""
+    for(var char = statement.length-1; char >= 0; char--) {
+        results += statement[char]
+    }
+    return results
+}
+
+// Build a standalone function to remove strings of even lengths from a given array.
+function removeEven(arr) {
+    for(var ind = arr.length-1; ind >=0; ind--){
+        if (arr[ind].length % 2 === 0){
+            for(var index = ind; index < arr.length-1;index++ ){
+                arr[index] = arr[index+1]
+            }
+            arr.length--
+        } 
+    }
+    return arr
+}
+
+// Given a positive integer that is less than 4000, return a string containing that value in Roman numeral representation
+function numToRome(number) {
+    modern = [1000,900,500,400,100,90,50,40,10,9,5,4,1]
+    romans = ["M","CM","D","CD","C","XC","L","XL","X","IX","V","IV","I"]
+    results = ""
+
+    var ind = 0
+    while (number > 0){
+        if(number >= modern[ind]) {
+            results += romans[ind]
+            number-=modern[ind]
+        }
+        else{
+            ind++
+        }
+    }
+    return results
+}
+
+// Given a string containing a Roman numeral representation of a positive integer, return the integer
+function romanToInt(roman) {
+    var convert = {"M":1000, "CM":900,"D":500, "CD": 400, "C": 100,"XC":90,"L": 50,"XL": 40,"X":10, "IX": 9,"V": 5,"IV": 4,"I": 1}
+    var prev 
+    var results = 0
+    for(var ind=roman.length-1;ind>=0;ind--){
+        if(convert[roman[ind]] < prev) {
+            results -= convert[roman[ind]]
+            prev = convert[roman[ind]]
+        }
+        else {
+            results += convert[roman[ind]]
+            prev = convert[roman[ind]]
+        }
+    }
+    return results
+}
