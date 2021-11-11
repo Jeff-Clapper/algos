@@ -571,47 +571,9 @@ def multiply(num1: str, num2: str) -> str:
 """122. Best Time to Buy and Sell Stock II: You are given an integer array prices where prices[i] is the price of a given stock on the ith day.
 On each day, you may decide to buy and/or sell the stock. You can only hold at most one share of the stock at any time. However, you can buy it then immediately sell it on the same day.
 Find and return the maximum profit you can achieve."""
-# This is broken. I need to keep working on it later. 
-def maxProfit(prices):
-    results = next_max(prices)
-    if len(results) > 0:
-        return results[3]
-    else:
-        return 0
-
-def next_max(arr):
-    final = []
+def maxProfit(arr):
+    total = 0
     for ind in range(len(arr)-1):
-        vals = []
-        if arr[ind] > arr[ind+1]:
-            continue
-        vals.append(arr[ind])
-        
         if arr[ind] < arr[ind+1]:
-            ind2 = ind+1
-            while len(arr[ind2:]) > 1:
-                if arr[ind2] < arr[ind2+1]:
-                    ind2 +=1
-                else:
-                    break
-
-            vals.append(arr[ind2])
-            vals.append(vals[1]-vals[0])
-            
-            if len(arr[ind:])>0:
-                results = next_max(arr[ind+1:])
-                if len(results) > 0:
-                    vals.append(vals[2]+results[2])
-                else:
-                    vals.append(vals[2])
-        
-        if (len(final) > 0) and (len(vals) > 0):
-            if final[3] > vals[3]:
-                continue
-            else:
-                final = vals
-        else:
-            final = vals
-    
-    print(final)
-    return final
+            total += arr[ind+1]-arr[ind]
+    return total
