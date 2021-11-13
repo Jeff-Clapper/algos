@@ -555,7 +555,7 @@ def convert_string(num: str) -> int:
     
     return val
 
-#AFTER READING DISCUSSIONS FOR 43, I am have misunderstood what "directly convert string" meant, so here is a second go at it (less fast but better memory usage)
+#AFTER READING DISCUSSIONS FOR 43, I may have misunderstood what "directly convert string" meant, so here is a second go at it (less fast but better memory usage)
 def multiply(num1: str, num2: str) -> str:
     val = 0
     count2 = len(num2)-1
@@ -568,12 +568,59 @@ def multiply(num1: str, num2: str) -> str:
         count2-=1
     return f'{val}'
 
-"""122. Best Time to Buy and Sell Stock II: You are given an integer array prices where prices[i] is the price of a given stock on the ith day.
-On each day, you may decide to buy and/or sell the stock. You can only hold at most one share of the stock at any time. However, you can buy it then immediately sell it on the same day.
-Find and return the maximum profit you can achieve."""
+# """122. Best Time to Buy and Sell Stock II: You are given an integer array prices where prices[i] is the price of a given stock on the ith day.
+# On each day, you may decide to buy and/or sell the stock. You can only hold at most one share of the stock at any time. However, you can buy it then immediately sell it on the same day.
+# Find and return the maximum profit you can achieve."""
 def maxProfit(arr):
     total = 0
     for ind in range(len(arr)-1):
         if arr[ind] < arr[ind+1]:
             total += arr[ind+1]-arr[ind]
     return total
+
+# 739. Daily Temperatures: Given an array of integers temperatures represents the daily temperatures, return an array answer such that answer[i] is the number of days you have to wait after the ith day to get a warmer temperature. If there is no future day for which this is possible, keep answer[i] == 0 instead.
+"""Bruteforce times out with length"""
+# def dailyTemperatures(temps):
+#     for ind in range(len(temps)-1):
+#         temps[ind] = num_days_till_warmer(temps[ind:])
+#     temps[-1] = 0
+#     return temps
+
+# def num_days_till_warmer(temps):
+#     days = 1
+
+#     while days < len(temps):
+#         if temps[0] < temps[days]:
+#             return days
+#         days+=1
+#     return 0
+
+"""This times out with length"""
+# def dailyTemps(temps):
+#     results = []
+#     for temp in temps:
+#         results.append(0)
+
+#     for ind in range(len(temps)-2,-1,-1):
+#         if temps[ind] < temps[ind+1]:
+#             results[ind] = 1
+#         elif temps[ind] == temps[ind+1]:
+#             if results[ind+1] > 0:
+#                 results[ind] = results[ind+1]+1
+#             else: 
+#                 results[ind] = results[ind+1]
+#         else:
+#             results[ind] = days_to_warm(temps[ind:],results,ind)
+#     return results
+
+# def days_to_warm(temps,results,index):
+#     days = 1
+
+#     while days < len(temps):
+#         if temps[0] < temps[days]:
+#             return days
+#         if results[days+index] > 0:
+#             days += results[days+index]
+#         else:
+#             days+=1
+#     return 0
