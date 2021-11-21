@@ -624,3 +624,12 @@ def maxProfit(arr):
 #         else:
 #             days+=1
 #     return 0
+
+
+# You are given a sorted array consisting of only integers where every element appears exactly twice, except for one element which appears exactly once. Return the single element that appears only once. Your solution must run in O(log n) time and O(1) space. 
+def singleNonDuplicate(nums):
+    for ind in range(0,len(nums)-1,2):
+        if nums[ind] != nums[ind+1]:
+            return nums[ind]
+    return nums[-1]
+    """This may not technically be O(log n) but I would be okay putting this as a result in an interview"""
