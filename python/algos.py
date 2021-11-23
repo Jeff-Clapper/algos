@@ -633,3 +633,28 @@ def singleNonDuplicate(nums):
             return nums[ind]
     return nums[-1]
     """This may not technically be O(log n) but I would be okay putting this as a result in an interview"""
+
+def deleteNode(root, key):
+    return findNode(root,key)
+
+def findNode(root, key):
+    if root:
+        if root.val < key:
+            root.right = findNode(root.right, key)
+        elif root.val > key:
+            root.left = findNode(root.left, key)
+        elif root.val == key:
+            root.right = findLowestRight(root.left,root.right)
+            root = root.right
+    return root
+
+def findLowestRight(left,right):
+    if right.left:
+        findLowestRight(left,right.left)
+    else:
+        right.left = left
+    return right
+
+
+
+"""THIS FAILED IF GIVEN [0] 0"""
