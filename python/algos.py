@@ -634,6 +634,9 @@ def singleNonDuplicate(nums):
     return nums[-1]
     """This may not technically be O(log n) but I would be okay putting this as a result in an interview"""
 
+
+# Given a root node reference of a BST and a key, delete the node with the given key in the BST. Return the root node reference (possibly updated) of the BST. Basically, the deletion can be divided into two stages: 
+# Search for a node to remove. If the node is found, delete the node
 def deleteNode(root, key):
     return findNode(root,key)
 
@@ -643,18 +646,68 @@ def findNode(root, key):
             root.right = findNode(root.right, key)
         elif root.val > key:
             root.left = findNode(root.left, key)
-        elif root.val == key:
+        elif root.val == key and root.left:
             root.right = findLowestRight(root.left,root.right)
             root = root.right
+        elif root.val == key and root.right:
+            root = findLowestRight(None, root.right)
+        elif root.val == key:
+            return None
     return root
 
 def findLowestRight(left,right):
-    if right.left:
-        findLowestRight(left,right.left)
+    if right:
+        if right.left:
+            findLowestRight(left,right.left)
+        else:
+            right.left = left
     else:
-        right.left = left
+        return left
     return right
 
 
 
-"""THIS FAILED IF GIVEN [0] 0"""
+
+"""Time exceeded limit on large lists"""
+"""Done with this for the day: could try, if largest start bigger than other[-1], skip. This would reduce the iterations of the for loop"""
+def intervalIntersection(firstList, secondList):
+    L3 = []
+    L1I = 0
+    L2I = 0
+
+    while (L1I < len(firstList)) and (L2I < len(secondList)):
+        arr = []
+        L1 = range(firstList[L1I][0],(firstList[L1I][-1]+1))
+        L2 = range(secondList[L2I][0],(secondList[L2I][-1]+1))
+        if L1[0] >= L2[0]:
+            for ind in L1:
+                if ind in L2:
+                    arr.append(ind)
+                    if L1[-1] <= L2[-1]:
+                        arr.append(L1[-1])
+                        L3.append(arr)
+                    else: 
+                        arr.append(L2[-1])
+                        L3.append(arr)
+                    break
+            if L1[-1] <= L2[-1]:
+                L1I += 1
+            else:
+                L2I += 1
+                
+        else:
+            for ind in L2:
+                if ind in L1:
+                    arr.append(ind)
+                    if L2[-1] <= L1[-1]:
+                        arr.append(L2[-1])
+                        L3.append(arr)
+                    else: 
+                        arr.append(L1[-1])
+                        L3.append(arr)
+                    break
+            if L1[-1] <= L2[-1]:
+                L1I += 1
+            else:
+                L2I += 1
+    return L3
