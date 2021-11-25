@@ -635,7 +635,7 @@ def singleNonDuplicate(nums):
     """This may not technically be O(log n) but I would be okay putting this as a result in an interview"""
 
 
-# Given a root node reference of a BST and a key, delete the node with the given key in the BST. Return the root node reference (possibly updated) of the BST. Basically, the deletion can be divided into two stages: 
+# 450: Given a root node reference of a BST and a key, delete the node with the given key in the BST. Return the root node reference (possibly updated) of the BST. Basically, the deletion can be divided into two stages: 
 # Search for a node to remove. If the node is found, delete the node
 def deleteNode(root, key):
     return findNode(root,key)
@@ -670,6 +670,8 @@ def findLowestRight(left,right):
 
 """Time exceeded limit on large lists"""
 """Done with this for the day: could try, if largest start bigger than other[-1], skip. This would reduce the iterations of the for loop"""
+# 986. Interval List Intersections: You are given two lists of closed intervals, firstList and secondList, where firstList[i] = [starti, endi] and secondList[j] = [startj, endj]. Each list of intervals is pairwise disjoint and in sorted order. 
+# Return the intersection of these two interval lists. A closed interval [a, b] (with a <= b) denotes the set of real numbers x with a <= x <= b. The intersection of two closed intervals is a set of real numbers that are either empty or represented as a closed interval. For example, the intersection of [1, 3] and [2, 4] is [2, 3].
 def intervalIntersection(firstList, secondList):
     L3 = []
     L1I = 0
@@ -711,3 +713,33 @@ def intervalIntersection(firstList, secondList):
             else:
                 L2I += 1
     return L3
+
+# 53. Maximum Subarray: Given an int arr nums, find thecontiguous subarray (containing at least one number) which has the largest sum and return its sum. 
+"""O(n), there is a divide and conquer method. may have to find"""
+def maxSubArray(nums):
+    ind = 0
+    total_max = nums[ind]
+    while ind < len(nums):
+        if nums[ind] > 0:
+            maxInSub = maxInSubArray(nums,ind)
+            if maxInSub['max'] > total_max:
+                total_max = maxInSub['max']
+            ind = maxInSub['ind']
+        else:
+            if nums[ind] > total_max:
+                total_max = nums[ind]
+        ind += 1
+    return total_max
+
+def maxInSubArray(nums,ind):
+    max = nums[ind]
+    curr = nums[ind]
+    while (curr > 0) and (ind<len(nums)-1):
+        ind += 1
+        curr += nums[ind]
+        if max < curr:
+            max = curr
+
+    return {"max":max,"ind":ind}
+
+ 
