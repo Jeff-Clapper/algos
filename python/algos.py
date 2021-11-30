@@ -742,4 +742,27 @@ def maxInSubArray(nums,ind):
 
     return {"max":max,"ind":ind}
 
- 
+
+# 721. Accounts Merge: See Leet code for details
+"""Not sure why this is wrong, but my guess is that I need to sort the list by length of each list, then by name?"""
+def accountsMerge(accounts):
+    names = {}
+    index = 0
+    for account in accounts:
+        if account[0] in names:
+            name = account[0]
+            for index in range(1,len(account)):
+                if account[index] in accounts[names[account[0]]]:
+                    accounts[names[account[0]]]+= account[1:]
+                    accounts[names[account[0]]]
+                    del accounts[names[account[0]]][0]
+                    list(set(accounts[names[account[0]]]))
+                    accounts[names[account[0]]].insert(0,name)
+                    del accounts[index]
+                    index -=1
+                    break
+        else:
+            names[account[0]]=index
+        index+=1
+    return sorted(accounts)
+    
