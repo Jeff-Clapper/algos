@@ -766,3 +766,123 @@ def accountsMerge(accounts):
         index+=1
     return sorted(accounts)
     
+
+
+
+
+
+
+
+
+
+# I have built a list of server DistinguishedName extracted from ActiveDirectory
+# 
+# Goals:
+# - Your solution should be in Python3
+# - Your solution should procuce a count of servers in each region
+# - Your solution should list which servers are in which region
+# 
+# Assumptions:
+# - The servers in the list are in different regions of the world, as indicated by their DistinguishedNames
+# - Each server is only in one region
+# - This is just one assumption. Feel free to ask your interviewer about more assumptions as needed
+# 
+# Output Example:
+# CANADA has 3 servers:
+# server99
+# server03
+# server12
+# GERMANY has 1 server:
+# server01
+
+
+# # approx: 19 min
+def server_count(arr):
+    server_count = {}
+    servers_locations = []
+    for server in arr:
+        server_info=(server.split(','))
+        servers_locations.append(server_info[1][3:])
+    locations = set(servers_locations)
+    
+    for location in locations:
+        server_count[location] =0
+
+    for server in servers_locations:
+        server_count[server] +=1
+
+    return server_count
+
+DNs=[
+"CN=Server001,OU=AMER,OU=Servers,OU=Corp,DC=Dogfood,DC=com",
+"CN=Server002,OU=AMER,OU=Servers,OU=Corp,DC=Dogfood,DC=com",
+"CN=Server003,OU=INDIA,OU=Servers,OU=Corp,DC=Dogfood,DC=com",
+"CN=Server004,OU=CHINA,OU=Servers,OU=Corp,DC=Dogfood,DC=com",
+"CN=Server005,OU=AMER,OU=Servers,OU=Corp,DC=Dogfood,DC=com",
+"CN=Server006,OU=EMEA,OU=Servers,OU=Corp,DC=Dogfood,DC=com",
+"CN=Server007,OU=CHINA,OU=Servers,OU=Corp,DC=Dogfood,DC=com",
+"CN=Server008,OU=AMER,OU=Servers,OU=Corp,DC=Dogfood,DC=com",
+"CN=Server009,OU=AMER,OU=Servers,OU=Corp,DC=Dogfood,DC=com",
+"CN=Server010,OU=AMER,OU=Servers,OU=Corp,DC=Dogfood,DC=com",
+"CN=Server011,OU=CHINA,OU=Servers,OU=Corp,DC=Dogfood,DC=com",
+"CN=Server012,OU=CHINA,OU=Servers,OU=Corp,DC=Dogfood,DC=com",
+"CN=Server013,OU=INDIA,OU=Servers,OU=Corp,DC=Dogfood,DC=com",
+"CN=Server014,OU=EMEA,OU=Servers,OU=Corp,DC=Dogfood,DC=com",
+"CN=Server015,OU=AMER,OU=Servers,OU=Corp,DC=Dogfood,DC=com",
+"CN=Server016,OU=AMER,OU=Servers,OU=Corp,DC=Dogfood,DC=com",
+"CN=Server017,OU=INDIA,OU=Servers,OU=Corp,DC=Dogfood,DC=com",
+"CN=Server018,OU=AMER,OU=Servers,OU=Corp,DC=Dogfood,DC=com",
+"CN=Server019,OU=CHINA,OU=Servers,OU=Corp,DC=Dogfood,DC=com",
+"CN=Server020,OU=AMER,OU=Servers,OU=Corp,DC=Dogfood,DC=com",
+"CN=Server021,OU=AMER,OU=Servers,OU=Corp,DC=Dogfood,DC=com",
+"CN=Server022,OU=EMEA,OU=Servers,OU=Corp,DC=Dogfood,DC=com",
+"CN=Server023,OU=EMEA,OU=Servers,OU=Corp,DC=Dogfood,DC=com",
+"CN=Server024,OU=AMER,OU=Servers,OU=Corp,DC=Dogfood,DC=com",
+"CN=Server025,OU=AMER,OU=Servers,OU=Corp,DC=Dogfood,DC=com",
+"CN=Server026,OU=INDIA,OU=Servers,OU=Corp,DC=Dogfood,DC=com",
+"CN=Server027,OU=CHINA,OU=Servers,OU=Corp,DC=Dogfood,DC=com",
+"CN=Server028,OU=AMER,OU=Servers,OU=Corp,DC=Dogfood,DC=com",
+"CN=Server029,OU=AMER,OU=Servers,OU=Corp,DC=Dogfood,DC=com",
+"CN=Server030,OU=AMER,OU=Servers,OU=Corp,DC=Dogfood,DC=com"
+]
+
+
+# results = server_count(DNs)
+# print(results)
+
+
+
+
+
+
+
+
+# my final answer after playing with it longer than time limit
+def server_count2(arr):
+    sorted_servers = {}
+    for server in arr:
+        server_info=(server.split(','))
+
+        if server_info[1][3:] not in sorted_servers:
+            sorted_servers[server_info[1][3:]] = [server_info[0][3:]]
+        else:
+            sorted_servers[server_info[1][3:]].append(server_info[0][3:])
+
+    return sorted_servers
+
+def ledgible_results(dictionary):
+    for location,servers in dictionary.items():
+        print(f'{location} has {len(servers)}:')
+        for server in servers:
+            print('\t',server)
+
+
+
+all_servers = server_count2(DNs)
+print("the results from the return statement:")
+print(all_servers, "\n")
+
+print("results after makeing results readable: ")
+ledgible_results(all_servers)
+
+
