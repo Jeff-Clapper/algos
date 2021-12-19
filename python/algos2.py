@@ -72,7 +72,7 @@ def divide(dividend, divisor):
 """ ^^ TIMES OUT WITH HIGH VOLUME OF CALLS ^^ """
 
 
-# AlgoMaster: Two Number Sum
+# AlgoExpert: Two Number Sum
 def twoNumberSum(array, targetSum):
     array.sort()
     left = 0
@@ -91,7 +91,7 @@ def twoNumberSum(array, targetSum):
 
 """ ^^ Completed successfully in 24:50 ^^ """
 
-# AlgoMaster: Find Closest Value in BST
+# AlgoExpert: Find Closest Value in BST
 def findClosestValueInBst(tree, target):
     if tree.value == target:
         return tree.value
@@ -111,3 +111,85 @@ def findClosestValueInBst(tree, target):
         return closest
 
 """ ^^ Completed successfully in 38:50 ^^ """
+
+#AlgoExpert: Branch Sums
+def branchSums(root):
+    left = False
+    right = False
+    
+    if root.left:
+        left = branchSums(root.left)
+    if root.right:
+        right = branchSums(root.right)
+    
+    results = []
+
+    if left:
+        for total in left:
+            results.append(total+root.value)
+    if right:
+        for total in right:
+            results.append(total+root.value)
+    
+    if results:
+        return results
+    else:
+        return [root.value]
+
+""" ^^ Completed successfully in 40:00 ^^ """
+
+
+# AlgoExpert: Minimum Waiting Time
+def minimumWaitingTime(queries):
+    queries.sort()
+    total = sum(queries)
+    results = 0
+
+    for ind in range(len(queries)-1,0,-1):
+        total = total-queries[ind]
+        results += total
+    
+    return results
+
+""" ^^ Completed successfully in 13:15 ^^ """
+
+# alternate to above
+def minimumWaitingTime(queries):
+    total = 0
+    queries.sort()
+    length = len(queries)
+
+    for ind in range(len(queries)):
+        length -= 1
+        total += queries[ind]*length
+    return total
+
+# AlgoExpert: validate subsequence
+def isValidSubsequence(array, sequence):
+    arrayInd = 0
+    sequenceInd = 0
+
+    while arrayInd < len(array) and sequenceInd < len(sequence):
+        if array[arrayInd] == sequence[sequenceInd]:
+            sequenceInd += 1
+        arrayInd+=1
+
+    if sequenceInd != len(sequence):
+        return False
+    
+    return True
+
+""" ^^ Completed successfully in 20:00 min ^^ """
+
+# AlgoExpert: Bubble Sort
+def bubbleSort(array):
+    isComplete = False
+    while not isComplete:
+        isComplete = True
+        for ind in range(len(array)-1):
+            if array[ind] > array[ind+1]:
+                array[ind], array[ind+1] = array[ind+1], array[ind] 
+                isComplete = False
+    return array
+
+""" ^^ Not timed as it was an algo specifically doing a bubble (new concept to me) ^^ """
