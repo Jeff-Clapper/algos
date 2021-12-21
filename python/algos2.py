@@ -193,3 +193,54 @@ def bubbleSort(array):
     return array
 
 """ ^^ Not timed as it was an algo specifically doing a bubble (new concept to me) ^^ """
+
+# AlgoMaster: Remove Duplicates From Linked List
+class LinkedList:
+    def __init__(self, value, next=None):
+        self.value = value
+        self.next = next
+
+    def printList(self):
+        if self.next == None:
+            print("currVal: ", self.value)
+        else:
+            print("currVal: ", self.value)
+            LinkedList.printList(self.next)
+
+def removeDuplicatesFromLinkedList(linkedList):
+    runThroughLinkedList(linkedList)
+    return linkedList
+
+def runThroughLinkedList(linkedList):
+    print(linkedList.value)
+    if not linkedList.next:
+        return
+    if linkedList.next.value == linkedList.value:
+        linkedList.next = linkedList.next.next
+        runThroughLinkedList(linkedList)
+    return runThroughLinkedList(linkedList.next)
+
+""" ^^ Didn't get right. Worked for me, but not for algo master ^^ """
+
+
+#AlgoMaster: Binary Search 
+def binarySearch(array, target):
+    left = 0
+    right = len(array)-1
+
+    while left != right:
+        middle = (left+right)//2
+        print(array[middle])
+        if array[middle] == target:
+            return middle
+        elif array[middle] < target:
+            left = middle+1
+        else:
+            right= middle-1
+
+    if array[right] == target:
+        return right
+    
+    return -1
+
+""" ^^ Not timed as it was an algo specifically doing a binary search (new concept to me) ^^ """
