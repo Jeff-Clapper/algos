@@ -643,3 +643,30 @@ def tandemBicycleMin(redShirtSpeeds, blueShirtSpeeds):
 """ My initial attempt to come up with the answer resulted in going in the wrong direction. Could have been managed by coming up with more examples and running my solution through """
 
 
+
+#AlgoExpert: Non-Constructible Change
+def nonConstructibleChange(coins):
+    coins.sort()
+    change = 0
+    for coin in coins:
+        if coin > change+1:
+            break
+        else:
+            change+=coin
+
+    return change+1
+
+""" ^^ Did not time due to not discovering way to solve the issue ^^  """
+
+
+# AlgoExpert: Selection Sort
+def selectionSort(array):
+                for leftIndex in range(len(array)):
+                                smallIndex = leftIndex
+                                for loopIndex in range(leftIndex,len(array)):
+                                                if array[loopIndex] < array[smallIndex]:
+                                                                smallIndex = loopIndex                               
+                                array[leftIndex], array[smallIndex] = array[smallIndex], array[leftIndex]
+                return array
+
+""" ^^ Did not time as it was working on selection sort (a specific concept I am unfamiliar with) ^^ """
