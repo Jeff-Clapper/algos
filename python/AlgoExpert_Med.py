@@ -235,3 +235,51 @@ def swapFront(array):
     return array
 
 """ ^^ This is not working. It acts differently on office computer vs in algo Expert. Also, it's not getting right answer here either and idk why not ^^ """
+
+
+#AlgoExpert: Single Cycle Check
+#Optimization: speed: O(n^2) memory: O(n)
+def hasSingleCycle(array):
+    for index in range(len(array)):
+        indexesViewed = {index:index}
+
+        for value in range(1,len(array)):
+            index += array[index]
+            
+            while index < 0:
+                index = len(array) + index
+            
+            while index >= len(array):
+                index = index - len(array)
+            
+            if index in indexesViewed:
+                return False
+            else:
+                indexesViewed[index] = index
+
+    return True
+
+""" ^^ Completed, Not timed as it was completed in office ^^ """
+
+
+# AlgoExpert: Single Cycle Check
+# Optimization: speed: O(n) memory: O(n)
+# This was my attempted original solution. I was able to work it out throught the day
+def hasSingleCycle(array):
+    index = 0
+    indexesViewed = {}
+
+    for value in range(0,len(array)):
+        if index in indexesViewed:
+            return False
+        else:
+            indexesViewed[index] = index
+        
+        index += array[index]
+        index = index % len(array)
+
+        while index < 0:
+            index = len(array) + index
+
+    return index == 0
+""" ^^ Completed, Not timed as it was completed in office ^^ """
