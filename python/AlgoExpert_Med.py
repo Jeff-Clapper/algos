@@ -190,3 +190,48 @@ def binarySearchHelper(array, target, left,right):
     return -1
 
 """ ^^ Completed in 13:23, could have completed without helper function ^^ """
+
+
+# AlgoExpert: Kadane's Algorit
+def kadanesAlgorithm(array):
+    count = 0
+    max = -10000000000
+
+    for val in array:
+        count += val
+        if count > max:
+            max = count
+        if count < 0:
+            count = 0
+    
+    return max
+
+""" ^^ Completed successfully in less than 15 min ^^ """
+
+
+# AlgoExpert: Permutations 
+def getPermutations(array, results = [], iteration=0):
+    thisArray = []
+    for ind in range(len(array)):
+        thisArray.append(array[ind])
+
+    if thisArray not in results:
+        results.append(thisArray)
+        newArray = frontToBack(array)
+        return getPermutations(newArray,results,iteration = iteration+1)
+    elif iteration > 0:
+        newArray = swapFront(array)
+        return getPermutations(newArray,results,0)
+    else:
+        return results
+    
+def frontToBack(array):
+    value = array.pop(0)
+    array.append(value)
+    return array
+
+def swapFront(array):
+    array[0], array[1] = array[1], array[0]
+    return array
+
+""" ^^ This is not working. It acts differently on office computer vs in algo Expert. Also, it's not getting right answer here either and idk why not ^^ """
