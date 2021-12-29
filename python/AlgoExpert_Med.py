@@ -237,6 +237,7 @@ def swapFront(array):
 """ ^^ This is not working. It acts differently on office computer vs in algo Expert. Also, it's not getting right answer here either and idk why not ^^ """
 
 
+
 #AlgoExpert: Single Cycle Check
 #Optimization: speed: O(n^2) memory: O(n)
 def hasSingleCycle(array):
@@ -283,3 +284,251 @@ def hasSingleCycle(array):
 
     return index == 0
 """ ^^ Completed, Not timed as it was completed in office ^^ """
+=======
+# AlgoExpert: Three Number Sum (Practice re run)
+def threeNumberSum(array, targetSum):
+    array.sort()
+    results = []
+
+    for ind in range(len(array)-2):
+        left = ind+1
+        right = len(array)-1
+        
+        while left < right:
+            if array[ind] + array[left] + array[right] == targetSum:
+                results.append([array[ind],array[left],array[right]])
+                if array[left+1] == left:
+                    left += 1
+                else:
+                    right -= 1
+            elif array[ind] + array[left] + array[right] < targetSum:
+                left += 1
+            else:
+                right -= 1
+
+    return results
+
+""" ^^ Completed successfully in 13:00 minutes ^^ """
+
+# AlgoExpert: BST Construction 
+#Insertion and contains is working
+class BST:
+    def __init__(self, value):
+        self.value = value
+        self.left = None
+        self.right = None
+
+    def insert(self, value):
+        runner = self
+        while True:
+            if value >= runner.value:
+                if runner.right is not None:
+                    runner = runner.right
+                else:
+                    runner.right = BST(value)
+                    break
+            else:
+                if runner.left is not None:
+                    runner = runner.left
+                else:
+                    runner.left = BST(value)
+                    break
+        return self
+
+    def contains(self, value):
+        runner = self
+        while runner is not None:
+            if value > runner.value:
+                runner = runner.right
+            elif value < runner.value:
+                runner = runner.left
+            else:
+                return True
+        return False
+
+    def remove(self, value):
+        toBeTrimmed = self
+        previous = toBeTrimmed
+        
+        while toBeTrimmed is not None and toBeTrimmed.value != value:
+            if value > toBeTrimmed.value:
+                previous = toBeTrimmed
+                toBeTrimmed = toBeTrimmed.right
+            elif value < toBeTrimmed.value:
+                previous = toBeTrimmed
+                toBeTrimmed = toBeTrimmed.left
+        
+        if toBeTrimmed is None:
+            return self
+        
+        newHead = toBeTrimmed
+        while newHead.left is not None:
+            newHead = newHead.left
+
+        toBeTrimmed = toBeTrimmed.removeLowestHigh()
+        newHead.left = toBeTrimmed.left
+        newHead.right = toBeTrimmed.right
+
+        if previous != toBeTrimmed:
+            if value < previous.value:
+                previous.left = None
+            else:
+                previous.right = None
+        else:
+            self = None
+
+        self.insert(newHead.value)
+        return self
+
+    def removeLowestHigh(self):
+        runner = self
+        previous = runner
+        while runner.left is not None:
+            previous = runner
+            runner = runner.left
+        
+        previous.left = None
+        return self
+
+""" ^^ Insert and Contains working, not remove ^^ """
+
+# AlgoExpert: Linked List Construction
+# This is an input class. Do not edit.
+class Node:
+    def __init__(self, value, prev=None):
+        self.value = value
+        self.prev = prev
+        self.next = None
+
+
+class DoublyLinkedList:
+    def __init__(self):
+        self.head = None
+        self.tail = None
+
+    def setHead(self, node,removing=False):
+        if removing == True and node.prev == self.head:
+            node.prev.next = None
+        elif self.head and self.containsNode(node):
+            if node.next:
+                node.next.prev = node.prev
+            if node.prev:
+                node.prev.next = node.next
+        
+        node.prev = None
+        if self.head and not removing:
+            node.next = self.head
+            self.head.prev = node
+        self.head = node
+
+        if not self.tail:
+            runner =self.head
+            while runner.next is not None:
+                runner = runner.next
+            self.setTail(runner)
+
+    def setTail(self, node, removing=False):
+        if removing == True and node.next == self.tail:
+            node.next.prev = None
+        elif self.tail and self.containsNode(node):
+            if node.prev:
+                node.prev.next = node.next
+            if node.next:
+                node.next.prev = node.prev
+        node.next = None
+        if self.tail and not removing:
+            node.prev = self.tail
+            self.tail.next = node
+        self.tail = node
+        
+        if not self.head: 
+            runner = self.tail
+            while runner.prev is not None:
+                runner = runner.prev
+            self.setHead(runner)
+
+    def insertBefore(self, node, nodeToInsert):
+        if self.containsNode(nodeToInsert):
+            if self.head == nodeToInsert:
+                self.setHead(nodeToInsert.next)
+            elif self.tail == nodeToInsert:
+                self.setTail(nodeToInsert.prev)
+            else:
+                self.remove(nodeToInsert)
+
+        if self.head == node:
+            self.setHead(nodeToInsert)
+        else:
+            nodeToInsert.prev = node.prev
+            nodeToInsert.prev.next = nodeToInsert
+            nodeToInsert.next = node
+            node.prev = nodeToInsert
+
+    def insertAfter(self, node, nodeToInsert):
+        if self.containsNode(nodeToInsert):
+            if self.head == nodeToInsert:
+                self.setHead(nodeToInsert.next)
+            elif self.tail == nodeToInsert:
+                self.setTail(nodeToInsert.prev)
+            else:
+                self.remove(nodeToInsert)
+
+        if node == self.tail:
+            self.setTail(nodeToInsert)
+        else:
+            self.insertBefore(node.next)
+
+    def insertAtPosition(self, position, nodeToInsert):
+        runner = self.head
+        count = 1
+        while count != position and runner is not None:
+            runner = self.next
+            count+=1
+
+        self.insertBefore(runner,nodeToInsert)
+
+    def removeNodesWithValue(self, value):
+        runner = self.head
+        while runner is not None:
+            if runner.value == value:
+                if self.head == runner:
+                    self.setHead(runner.next,True)
+                elif self.tail == runner:
+                    self.setTail(runner.prev, True)
+                else: 
+                    runner.prev.next = runner.next
+                    runner.next.prev = runner.prev
+
+            runner = runner.next
+
+    def remove(self, node):
+        if self.head == node:
+            self.setHead(node.next, True)
+        elif self.tail == node:
+            self.setTail(node.prev, True)
+        else: 
+            node.prev.next = node.next
+            node.next.prev = node.prev
+        node.next =  None
+        node.prev = None
+
+
+    def containsNodeWithValue(self, value):
+        runner = self.head
+        while runner is not None:
+            if runner.value == value:
+                return True
+            runner = runner.next
+        return False
+
+    def containsNode(self, node):
+        runner = self.head
+        while runner is not None:
+            if runner == node:
+                return True
+            runner = runner.next
+        return False
+
+""" ^^ Everything is working except remove items with value ^^ """
+""" ^^ This may stem from the add to head and add to tail not working. Reassessing Later ^^ """
+
