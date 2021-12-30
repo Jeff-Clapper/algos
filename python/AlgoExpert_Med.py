@@ -284,7 +284,7 @@ def hasSingleCycle(array):
 
     return index == 0
 """ ^^ Completed, Not timed as it was completed in office ^^ """
-=======
+
 # AlgoExpert: Three Number Sum (Practice re run)
 def threeNumberSum(array, targetSum):
     array.sort()
@@ -531,4 +531,160 @@ class DoublyLinkedList:
 
 """ ^^ Everything is working except remove items with value ^^ """
 """ ^^ This may stem from the add to head and add to tail not working. Reassessing Later ^^ """
+
+
+# AlgoExpert: Invert Binary Tree:
+# This is the class of the input binary tree.
+class BinaryTree:
+    def __init__(self, value):
+        self.value = value
+        self.left = None
+        self.right = None
+
+def invertBinaryTree(node):
+    if node is not None:
+        node.left, node.right = node.right, node.left
+        if node.left:
+            invertBinaryTree(node.left)
+        if node.right:
+            invertBinaryTree(node.right)
+    return node
+
+""" ^^ Completed successfully in 9:00 minutes ^^ """
+
+
+# AlgoExpert: Min Heap Construction
+class MinHeap:
+    def __init__(self, array):
+        # Do not edit the line below.
+        self.heap = self.buildHeap(array)
+        """ Basic breakdown of a heap: 
+        -    A heap is an array
+        -    if min heap, then the topmost value is the smallest int
+        -    if max heap, the topmost value is the largest int
+        -    A parent will always be smaller than its children
+        -    You can find the children of a node by: 2(index of parent)+1 and 2(index of parent)+2 
+        -    You can find the parent of a node by: ((index of child) - 1)//2 
+        """
+
+    def buildHeap(self, array):
+        # Sort Array via the siftdown method
+        pass
+
+    def siftDown(self, index):
+        # this can be a while loop
+        # self.heap[index], self.heap[2(index)+1] = self.heap[2(index)+1], self.heap[index]
+        # OR (NOtE: pick the smallest of the two children)
+        # self.heap[index], self.heap[2(index)+2] = self.heap[2(index)+2], self.heap[index]
+        # return ?self? or just return
+        pass
+
+    def siftUp(self, index):
+        # This can be a while loop
+        # self.heap[index], self.heap[(index-1)//2] = self.heap[(index-1)//2], self.heap[index]
+        # return ?self? or just return 
+        pass
+
+    def peek(self):
+        # return self.heap[0]
+        pass
+
+    def remove(self, index):
+        # Remove in a heap is typically only for the root node, not other values. SO with that logic:
+        # self.heap[0], self.heap[-1] = self.heap[-1], self.heap[0]
+        # self.heap.pop()
+
+        # self.siftdown(index)
+        pass
+
+    def insert(self, value):
+        # self.heap.append(value)
+        # while heap[added_value_index] is < heap[(added_value_index-1)//2]:
+            # siftUp heap[added] and heap[parent]
+            # index = (added_value_index-1)//2
+        pass
+
+""" ^^ This is a new concept to me. I watched the explaination and took notes as I went, with ideas for solving. Will come back and implement later ^^ """
+
+
+# AlgoExpert: Three Number Sort:
+# This is O(n(logn)) speed, and O(1) space
+# Can be done in O(n)
+def threeNumberSort(array, order):
+    for orderInd in range(len(order)-1):
+        arrayInd = 0
+        while arrayInd < len(array):
+            if array[arrayInd] == order[orderInd]:
+                current = arrayInd
+                while array[current-1] not in order[:orderInd+1] and current > 0:
+                    array[current], array[current-1] = array[current-1], array[current]
+                    current-=1
+            arrayInd +=1
+    
+    return array
+
+""" ^^ Completed successfully in 22:10 minutes ^^ """
+
+# AlgoExpert: Three Number Sort:
+def threeNumberSort(array, order):
+    ind1, ind2, ind3 = 0,0,len(array)-1
+    while ind2 <= ind3:
+        value = array[ind2]
+        if value == order[0]:
+            array[ind1],array[ind2] = array[ind2], array[ind1]
+            ind1 +=1 
+            ind2 +=1
+        elif value == order[1]:
+            ind2 +=1
+        else:
+            array[ind3], array[ind2] = array[ind2], array[ind3]
+            ind3 -=1
+    return array
+
+""" ^^ Completed this after reviewing their answers ^^ """
+
+
+# AlgoExpert: Min Max Stack Construction
+# This is working on mine, but not theres. I'm accepting it and moving on
+class MinMaxStack:
+    def __init__(self,array=[]):
+        self.stack = array
+        self.max = float('-inf')
+        self.min = float('inf')
+
+    def peek(self):
+        return self.stack[-1]
+
+    def pop(self):
+        value = self.stack.pop(-1)
+        if value == self.max:
+            self.max = max(self.stack)
+        elif value == self.min:
+            self.min = min(self.stack)
+        return value
+
+    def push(self, number):
+        self.stack.append(number)
+        if number > self.max:
+            self.max = number
+        if number < self.min:
+            self.min = number
+        
+        return
+    
+    def getMin(self):
+        if self.min == float('inf'):
+            return 
+        else:
+            return self.min
+
+
+    def getMax(self):
+        if self.max == float('-inf'):
+            return 
+        else:
+            return self.max
+
+""" ^^ New Concept. Did not Time ^^ """
+
 
