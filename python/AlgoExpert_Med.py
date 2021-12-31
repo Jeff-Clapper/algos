@@ -688,3 +688,61 @@ class MinMaxStack:
 """ ^^ New Concept. Did not Time ^^ """
 
 
+# AlgoExpert: Group Anagrams
+def groupAnagrams(words):
+    values = {}
+    for word in words:
+        value = "".join(sorted(word))
+        if value in values:
+            values[value].append(word)
+        else:
+            values[value] = [word]
+
+    results = []
+    for value in values.values():
+        results.append(value)
+
+    return results
+
+""" ^^ Did not time as this was a review and completed at work ^^ """
+
+
+
+class Node:
+    def __init__(self, name):
+        self.children = []
+        self.name = name
+
+    def addChild(self, name):
+        self.children.append(Node(name))
+        return self
+
+    def breadthFirstSearch(self, array, depth=0):
+
+        array = self.breadthFirstSearchHelper(array)
+
+        for child in self.children:
+            array = child.breadthFirstSearch(array, depth = depth+1)
+        
+    def breadthFirstSearchHelper(self, array):
+        for child in self.children:
+            array.append(child.name)
+        
+        return array
+
+
+
+
+    def breadthFirstSearch(self, array):
+        depth = self.getDepth()
+        if self is not None:
+            array.append(self.name)
+            depth+1
+            while depth:
+                for child in self.children:
+                    array = self.breadthFirstSearch()
+        return array
+
+    def getDepth(self):
+        pass
+    # Disregard for now
