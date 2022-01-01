@@ -708,4 +708,82 @@ def groupAnagrams(words):
 
 
 # AlgoExpert: Breadth-First Search
-""" ^^ Did not time as this was a review and completed at work ^^ """
+class Node:
+    def __init__(self, name):
+        self.children = []
+        self.name = name
+
+    def addChild(self, name):
+        self.children.append(Node(name))
+        return self
+
+    def breadthFirstSearch(self, array):
+        queue = [self]
+        while len(queue) > 0:
+            current = queue.pop(0)
+            array.append(current.name)
+            for child in current.children:
+                queue.append(child)
+        
+        return array
+
+""" ^^ Utilized video to come up with this. Did not see them code it ^^ """
+
+
+# AlgoExpert: Valid Starting City
+# Speed: O(n^2) Mem: O(n)
+def validStartingCity(distances, fuel, mpg):
+    for ind in range(len(distances)):
+        distances[ind] = (fuel[ind]*mpg) - distances[ind]
+    
+    for ind in range(len(distances)):
+        trip = 0
+        count = 0
+        while count < len(distances):
+            trip += distances[(count+ind)%len(distances)]
+            if trip < 0:
+                break
+            else: 
+                count += 1
+        if count == len(distances) and trip >=0:
+            return ind
+
+""" ^^ Completed Successfully in 31:14 ^^ """
+
+
+
+# AlgoExpert: Binary Tree Diameter:
+class BinaryTree:
+    def __init__(self, value, left=None, right=None):
+        self.value = value
+        self.left = left
+        self.right = right
+
+
+def binaryTreeDiameter(tree):
+    results = binaryTreeDiameterHelper(tree)
+    return results[2]
+
+def binaryTreeDiameterHelper(tree):
+    left = 0
+    right = 0
+    total = 0
+    if tree.left is None and tree.right is None:
+        return [left,right,total]
+
+    if tree.left is not None:
+        leftTree = binaryTreeDiameterHelper(tree.left)
+        left = leftTree[0]+1
+        if total < leftTree[2]:
+            total = leftTree[2]
+
+    if tree.right is not None:
+        rightTree = binaryTreeDiameterHelper(tree.right)
+        right = rightTree[1]+1
+        if total < rightTree[2]:
+            total = rightTree[2]
+    if left+right > total:
+        total = left+right
+    return [left,right,total]
+
+""" ^^ This was close, but no cigar ^^ """
