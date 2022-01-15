@@ -886,3 +886,35 @@ print("results after makeing results readable: ")
 ledgible_results(all_servers)
 
 
+# Two A's for a coding interview
+def solution2(S):
+    count = 0
+    ind = 0
+    while ind < len(S):
+        if S[ind] == "X":
+            count+=1
+            ind +=3
+        else:
+            ind +=1
+
+    return count
+
+
+def solution(A):
+    value = A[0]
+    flipped = 0
+    kept = 0
+    for ind in range(len(A)):
+        if ind % 2 == 1:
+            if A[ind] == value:
+                kept+=1
+            else:
+                flipped+=1
+        else:
+            if A[ind] == value:
+                flipped+=1
+            else:
+                kept+=1
+
+    return min(flipped,kept)
+
