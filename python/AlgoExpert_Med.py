@@ -787,3 +787,21 @@ def binaryTreeDiameterHelper(tree):
     return [left,right,total]
 
 """ ^^ This was close, but no cigar ^^ """
+
+# AlgoExpert: Permuations
+def getPermutations(array):
+    perms = []
+    permsHelper(array,[],perms)
+    return perms 
+
+def permsHelper(array,currentPerm,perms):
+    if not len(array) and len(currentPerm):
+        perms.append(currentPerm)
+    else:
+        for ind in range(len(array)):
+            newArr = array[:ind] + array[ind+1:]
+            newPerm = currentPerm + [array[ind]]
+            permsHelper(newArr,newPerm,perms)
+
+""" ^^ This is a handtyped copy of their first answer, this was a rough one ^^ """
+""" Watch the walk-through again for the second one as it is tricky """
